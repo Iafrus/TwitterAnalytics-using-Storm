@@ -1,0 +1,35 @@
+
+
+## Introduzione
+
+Lo scopo dell'elaborato è ottenere previsioni per i dati sulla customer satisfaction dei 
+clienti della banca Santander relativi ad una competition di Kaggle.
+
+## Preprocessing
+
+I dati sono contenuti in un dataset in cui sono riportate 359 variabili
+espliative osservate su 76020 unità, più una variabile contenente l'id dell'unità.
+La variabile target è binaria e vale 1 per i clienti soddisfatti e 0 altrimenti.
+
+La variabile target assume prevalentemente valore 0:
+
+```{python mean-y}
+train.head()
+df = pd.DataFrame(train.TARGET.value_counts())
+df['Percentage'] = 100*df['TARGET']/train.shape[0]
+df
+```
+
+
+```{python var3}
+# Top-10 most common values
+train.var3.value_counts()[:10]
+```
+
+train = train.replace(-999999,2)
+train.loc[train.var3==-999999].shape
+
+```
+
+La variabile `var3` presenta alcuni outlier
+
