@@ -1,4 +1,4 @@
-package storm.esempio;
+package twitter.esempio;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -11,16 +11,16 @@ import twitter4j.Status;
 
 import java.util.Map;
 
-/**
+/*
  * Receives tweets and emits its words over a certain length.
  */
+@SuppressWarnings({ "serial", "rawtypes" })
 public class WordSplitterBolt extends BaseRichBolt {
 	
-	private static final long serialVersionUID = 5151173513759399636L;
+	private OutputCollector collector;
+//	private static final long serialVersionUID = 5151173513759399636L;
 
 	private final int minWordLength;
-
-    private OutputCollector collector;
 
     public WordSplitterBolt(int minWordLength) {
         this.minWordLength = minWordLength;
@@ -32,7 +32,7 @@ public class WordSplitterBolt extends BaseRichBolt {
     }
 
     @Override
-    public void execute(Tuple input) {
+    public void execute(Tuple input) { // codice che esegue su ogni tupla che riceve
         Status tweet = (Status) input.getValueByField("tweet");
         String lang = tweet.getUser().getLang();
         String text = tweet.getText().replaceAll("\\p{Punct}", " ").replaceAll("\\r|\\n", "").toLowerCase();
